@@ -23,7 +23,5 @@ public class ONG {
 
 	public void setResiduos(List<Residuo> residuos) {
 		this.residuos = residuos;
-	}
-	
-	
+	}	
 }
