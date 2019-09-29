@@ -7,14 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
-@Entity
+@Entity 
 public class ONG {
 	@Column
 	@ManyToMany
 	private List<Residuo> residuos;
 
 	public ONG(List<Residuo> residuos) {
-		super();
 		this.residuos = residuos;
 	}
 
