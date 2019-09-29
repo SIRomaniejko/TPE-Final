@@ -1,17 +1,21 @@
 package basura;
 
 import java.sql.Date;
-
 import puntos.PuntoRecoleccion;
 import users.Usuario;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 public class ResiduoRegistro {
+	@Id
+	@GeneratedValue
+	private int id;
 	@Column
 	@OneToOne
 	private Residuo residuo;
@@ -35,6 +39,8 @@ public class ResiduoRegistro {
 		this.puntoRecolecion = puntoRecolecion;
 		this.fecha = fecha;
 	}
+	
+	public ResiduoRegistro() {}
 
 	public Residuo getResiduo() {
 		return residuo;

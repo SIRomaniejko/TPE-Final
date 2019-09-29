@@ -5,9 +5,14 @@ import java.util.List;
 import basura.ResiduoRegistro;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class PuntoRecoleccion {
+	@Id
+	@GeneratedValue
+	private int id;
 	@Column
 	private List<ResiduoRegistro> residuos;
 	@Column
@@ -17,6 +22,9 @@ public class PuntoRecoleccion {
 		this.residuos = residuos;
 		this.volumenParaRecolectar = volumenParaRecolectar;
 	}
+	
+	public PuntoRecoleccion() {}
+	
 	public List<ResiduoRegistro> getResiduos() {
 		return residuos;
 	}

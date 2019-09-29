@@ -26,6 +26,8 @@ public class Residuo {
 		this.esReciclable = esReciclable;
 	}
 
+	public Residuo() {}
+	
 	public String getNombre() {
 		return nombre;
 	}

@@ -2,9 +2,14 @@ package abstracts;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public abstract class Coordenada {
+	@Id
+	@GeneratedValue
+	private int id;
 	@Column
 	private double latitud;
 	@Column
@@ -14,6 +19,8 @@ public abstract class Coordenada {
 		this.latitud = latitud;
 		this.longitud = longitud;
 	}
+	
+	public Coordenada() {}
 	
 	public double getLatitud() {
 		return latitud;

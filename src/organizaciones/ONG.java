@@ -5,10 +5,15 @@ import java.util.List;
 import basura.Residuo;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity 
 public class ONG {
+	@Id
+	@GeneratedValue
+	private int id;
 	@Column
 	@ManyToMany
 	private List<Residuo> residuos;
@@ -17,6 +22,8 @@ public class ONG {
 		this.residuos = residuos;
 	}
 
+	public ONG() {}
+	
 	public List<Residuo> getResiduos() {
 		return residuos;
 	}
