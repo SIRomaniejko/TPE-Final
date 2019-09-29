@@ -6,8 +6,8 @@ public class Usuario extends Individuo{
 	private int dni;
 	private String domicilio;
 	
-	public Usuario(String nombre, String apellido, int dni, String domicilio) {
-		super(nombre);
+	public Usuario(String nombre, String apellido, int dni, String domicilio, double longitud, double latitud) {
+		super(nombre,latitud,longitud);
 		this.apellido = apellido;
 		this.dni = dni;
 		this.domicilio = domicilio;
