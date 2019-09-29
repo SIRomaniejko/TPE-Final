@@ -1,7 +1,13 @@
 package abstracts;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public abstract class Coordenada {
+	@Column
 	private double latitud;
+	@Column
 	private double longitud;
 	
 	public Coordenada(double latitud, double longitud) {

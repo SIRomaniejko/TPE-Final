@@ -3,9 +3,14 @@ package puntos;
 import java.util.List;
 
 import basura.ResiduoRegistro;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class PuntoRecoleccion {
+	@Column
 	private List<ResiduoRegistro> residuos;
+	@Column
 	private double volumenParaRecolectar;
 	
 	public PuntoRecoleccion(List<ResiduoRegistro> residuos, double volumenParaRecolectar) {

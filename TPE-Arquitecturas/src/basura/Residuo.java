@@ -1,15 +1,26 @@
 package basura;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Residuo {
-	private String nombre;
+	@Id
+	@GeneratedValue
 	private int codigo;
+	@Column
+	private String nombre;
+	@Column
 	private double volumen;
+	@Column
 	private double valor;
+	@Column
 	private boolean esReciclable;
 	
-	public Residuo(String nombre, int codigo, double volumen, double valor, boolean esReciclable) {
+	public Residuo(String nombre, double volumen, double valor, boolean esReciclable) {
 		this.nombre = nombre;
-		this.codigo = codigo;
 		this.volumen = volumen;
 		this.valor = valor;
 		this.esReciclable = esReciclable;
@@ -25,10 +36,6 @@ public class Residuo {
 
 	public int getCodigo() {
 		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
 	}
 
 	public double getVolumen() {

@@ -1,15 +1,29 @@
 package basura;
 
-import java.util.Date;
+import java.sql.Date;
 
 import puntos.PuntoRecoleccion;
 import users.Usuario;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
 public class ResiduoRegistro {
+	@Column
+	@OneToOne
 	private Residuo residuo;
+	@Column
 	private int cantidad;
+	@Column
+	@OneToOne
 	private Usuario persona;
+	@Column
+	@OneToOne
 	private PuntoRecoleccion puntoRecolecion; 
+	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	
 	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario persona, PuntoRecoleccion puntoRecolecion,
