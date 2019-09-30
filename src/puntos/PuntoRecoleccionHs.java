@@ -5,14 +5,9 @@ import java.util.List;
 import basura.ResiduoRegistro;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
 public class PuntoRecoleccionHs extends PuntoRecoleccion{
-	@Id
-	@GeneratedValue
-	private int id;
 	@Column
 	private int horarioInicio;
 	@Column

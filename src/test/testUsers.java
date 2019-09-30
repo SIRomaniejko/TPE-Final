@@ -41,11 +41,11 @@ public class testUsers {
 	
 	@Test
 	public void persistirPersona() {
-		em.getTransaction().begin();;
+		/*em.getTransaction().begin();;
 		em.persist(personaDefault);
-		em.getTransaction().commit();;
+		em.getTransaction().commit();;*/
 		System.out.println("test1");
-		assertNotNull(em.find(Usuario.class, 3222));
+		assertNotNull(em.find(Usuario.class, "3222"));
 		System.out.println("test2");
 	}
 	

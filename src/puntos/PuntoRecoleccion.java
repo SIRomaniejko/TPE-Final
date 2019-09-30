@@ -7,13 +7,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class PuntoRecoleccion {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column
+	@OneToMany
 	private List<ResiduoRegistro> residuos;
 	@Column
 	private double volumenParaRecolectar;

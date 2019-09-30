@@ -3,7 +3,6 @@ package organizaciones;
 import java.util.List;
 
 import basura.Residuo;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +13,6 @@ public class ONG {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column
 	@ManyToMany
 	private List<Residuo> residuos;
 

@@ -7,24 +7,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ResiduoRegistro {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column
 	@ManyToOne
 	private Residuo residuo;
 	@Column
 	private int cantidad;
-	@Column
 	@ManyToOne
 	private Usuario persona;
-	@Column
 	@ManyToOne
 	private PuntoRecoleccion puntoRecolecion; 
 	@Column
