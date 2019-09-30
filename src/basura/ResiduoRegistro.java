@@ -27,7 +27,7 @@ public class ResiduoRegistro {
 	@Column
 	@OneToOne
 	private PuntoRecoleccion puntoRecolecion; 
-	@Temporal(TemporalType.DATE)
+	@Column
 	private Date fecha;
 	
 	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario persona, PuntoRecoleccion puntoRecolecion,

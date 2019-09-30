@@ -14,7 +14,8 @@ public class Individuo{
 	@Column
 	private String nombre;
 
-	public Individuo(String nombre, double latitud, double longitud) {
+	public Individuo(String id, String nombre, double latitud, double longitud) {
+		this.identificador = id;
 		this.nombre = nombre;
 	}
 	

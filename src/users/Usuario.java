@@ -2,12 +2,12 @@ package users;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="tabla_usuario")
 public class Usuario extends Individuo{
+	@Column
 	private int dni;
 	@Column
 	private String apellido;
@@ -15,7 +15,7 @@ public class Usuario extends Individuo{
 	private String domicilio;
 	
 	public Usuario(String nombre, String apellido, int dni, String domicilio, double longitud, double latitud) {
-		super(nombre,latitud,longitud);
+		super( ""+dni, nombre,latitud,longitud);
 		this.apellido = apellido;
 		this.dni = dni;
 		this.domicilio = domicilio;
