@@ -4,8 +4,14 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="my_persistence_unit">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>test.persistencia.ClaseGenerica</class>
-		<class>users.Persona</class>
+		<class>users.Usuario</class>
+		<class>users.Grupo</class>
+		<class>users.Individuo</class>
+		<class>puntos.PuntoRecoleccion</class>
+		<class>puntos.PuntoRecoleccionHs</class>
+		<class>organizaciones.ONG</class>
+		<class>basura.Residuo</class>
+		<class>basura.ResiduoRegistro</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
 				value="org.apache.derby.jdbc.EmbeddedDriver" />

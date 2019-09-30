@@ -1,13 +1,25 @@
 package users;
 
-import abstracts.Coordenada;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Individuo extends Coordenada{
+@Entity
+@Table(name="table_individuo")
+public class Individuo{
+	
+	@Id
+	private String identificador;
+	@Column
 	private String nombre;
 
 	public Individuo(String nombre, double latitud, double longitud) {
-		super(latitud, longitud);
 		this.nombre = nombre;
+	}
+	
+	public Individuo() {
+		
 	}
 
 	public String getNombre() {
