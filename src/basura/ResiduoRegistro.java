@@ -17,15 +17,15 @@ public class ResiduoRegistro {
 	@GeneratedValue
 	private int id;
 	@Column
-	@OneToOne
+	@ManyToOne
 	private Residuo residuo;
 	@Column
 	private int cantidad;
 	@Column
-	@OneToOne
+	@ManyToOne
 	private Usuario persona;
 	@Column
-	@OneToOne
+	@ManyToOne
 	private PuntoRecoleccion puntoRecolecion; 
 	@Column
 	private Date fecha;
