@@ -2,10 +2,16 @@ package users;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="tabla_usuario")
+@NamedQueries({
+	@NamedQuery(name="getByName", query="SELECT u FROM Usuario u WHERE u.nombre = ?1"),
+	@NamedQuery(name="getAll", query="SELECT u FROM Usuario u")
+}) 
 public class Usuario extends Individuo{
 	@Column
 	private int dni;
@@ -15,7 +21,7 @@ public class Usuario extends Individuo{
 	private String domicilio;
 	
 	public Usuario(String nombre, String apellido, int dni, String domicilio, double longitud, double latitud) {
-		super( ""+dni, nombre,latitud,longitud);
+		super(((Integer)dni).toString(), nombre,latitud,longitud);
 		this.apellido = apellido;
 		this.dni = dni;
 		this.domicilio = domicilio;
@@ -42,5 +48,7 @@ public class Usuario extends Individuo{
 	public void setDomicilio(String domicilio) {
 		this.domicilio = domicilio;
 	}
-
+	public String toString() {
+		return super.getNombre() + "; " + this.apellido;
+	}
 }
