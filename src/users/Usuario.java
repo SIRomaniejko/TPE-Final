@@ -10,7 +10,8 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="getByName", query="SELECT u FROM Usuario u WHERE u.nombre = ?1"),
-	@NamedQuery(name="getAll", query="SELECT u FROM Usuario u")
+	@NamedQuery(name="getAll", query="SELECT u FROM Usuario u"),
+	@NamedQuery(name="getByDni", query="SELECT u FROM Usuario u WHERE u.dni = ?1")
 }) 
 public class Usuario extends Individuo{
 	@Column

@@ -27,6 +27,7 @@ buildNumber.properties
 *.war
 *.ear
 *.nar
+*.iml
 hs_err_pid*
 derby.log
 MyDataBase

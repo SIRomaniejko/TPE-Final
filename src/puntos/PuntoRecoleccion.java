@@ -3,13 +3,13 @@ package puntos;
 import java.util.List;
 
 import basura.ResiduoRegistro;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name="isFull", query="SELECT 1 FROM PuntoRecoleccion p WHERE p.volumenParaRecolectar <= (SELECT SUM(r.volumen_total) FROM ResiduoRegistro r WHERE  p.id_recoleccion = r.id_recoleccion )AND p.id = ?1")
+})
 public class PuntoRecoleccion {
 	@Id
 	@GeneratedValue

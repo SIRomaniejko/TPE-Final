@@ -3,13 +3,18 @@ package basura;
 import java.sql.Date;
 import puntos.PuntoRecoleccion;
 import users.Usuario;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name= "getBasuraUsuario", query="SELECT r FROM ResiduoRegistro r WHERE r.id_usuario = ?1"),
+	@NamedQuery(name="getRecicladosUsuario", query="SELECT r FROM ResiduoRegistro r WHERE r.id_usuario = ?1 AND r.fecha BETWEEN ?2 AND ?3 "),
+	@NamedQuery(name="getRecicladoLugar", query="SELECT r FROM ResiduoRegistro r WHERE r.puntorecoleccion = ?1 AND r.fecha BETWEEN ?2 AND ?3 "),
+	@NamedQuery(name="getHistorialPunto", query="SELECT rr FROM ResiduoRegistro rr  WHERE rr.id_puntorecoleccion = ?1 AND rr.fueRecolectado = true AND (SELECT r FROM Residuo r WHERE rr.id_basura = r.id_basura AND r.esReciclable = true)")
+})
+
+
 public class ResiduoRegistro {
 	@Id
 	@GeneratedValue
