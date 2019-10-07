@@ -19,18 +19,18 @@ public class ResiduoRegistro {
 	@Column
 	private int cantidad;
 	@ManyToOne
-	private Usuario persona;
+	private Usuario usuario;
 	@ManyToOne
 	private PuntoRecoleccion puntoRecolecion; 
 	@Column
 	private Date fecha;
 	
-	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario persona, PuntoRecoleccion puntoRecolecion,
+	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario usuario, PuntoRecoleccion puntoRecolecion,
 			Date fecha) {
 		super();
 		this.residuo = residuo;
 		this.cantidad = cantidad;
-		this.persona = persona;
+		this.usuario = usuario;
 		this.puntoRecolecion = puntoRecolecion;
 		this.fecha = fecha;
 	}
@@ -54,11 +54,11 @@ public class ResiduoRegistro {
 	}
 
 	public Usuario getPersona() {
-		return persona;
+		return usuario;
 	}
 
 	public void setPersona(Usuario persona) {
-		this.persona = persona;
+		this.usuario = persona;
 	}
 
 	public PuntoRecoleccion getPuntoRecolecion() {

@@ -20,14 +20,38 @@ import users.Usuario;
 public class testUsers {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Usuario personaDefault = new Usuario("yisu", "crais", 3224, "domicilio", 1, 1);
+	
+	
 	@BeforeClass
 	public static void setEntityManagerFactory() {
 		emf = Persistence.createEntityManagerFactory("my_persistence_unit");
 		System.out.println("before class");
+		
+		Usuario personaDefault1 = new Usuario("jose", "olmedo", 1111, "domicilio", 1, 1);
+		Usuario personaDefault2 = new Usuario("yisu", "crais", 2222, "domicilio", 1, 1);
+		Usuario personaDefault3 = new Usuario("yisu", "cravvvis", 3333, "domicilio", 1, 1);
+		Usuario personaDefault4 = new Usuario("ba", "ree", 4444, "domicilio", 1, 1);
+		Usuario personaDefault5 = new Usuario("haha", "koko", 5555, "domicilio", 1, 1);
+		
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(personaDefault1);
+		em.persist(personaDefault2);
+		em.persist(personaDefault5);
+		em.persist(personaDefault3);
+		em.persist(personaDefault4);
+		em.getTransaction().commit();
+		em.close();
 	}
+	
+	
 	@AfterClass
 	public static void closeEntityManagerFactory() {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.createQuery("DELETE FROM Usuario").executeUpdate();
+		em.getTransaction().commit();
+		em.close();
 		emf.close();
 		System.out.println("afterclass");
 	}
@@ -40,16 +64,6 @@ public class testUsers {
 	public void closeEntityManager() {
 		em.close();
 		System.out.println("after");
-	}
-	
-	@Test
-	public void persistirPersona() {
-		/*em.getTransaction().begin();;
-		em.persist(personaDefault);
-		em.getTransaction().commit();
-		System.out.println("test1");*/
-		assertNotNull(em.find(Usuario.class, "3224"));
-		System.out.println("test2");
 	}
 	
 	@Test
@@ -74,6 +88,11 @@ public class testUsers {
 		}
 		assertNotEquals(0, result.size());
 	}
-	
-
+	@Test
+	public void getNombre() {
+		Query query = em.createNamedQuery("getNombre");
+		String nombre = (String) query.setParameter(1, 3333).getSingleResult();
+		assertNotNull(nombre);
+		System.out.println(nombre + "xDDD");
+	}
 }
