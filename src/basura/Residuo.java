@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="isRecyclable", query="SELECT b.esReciclable FROM Basura b WHERE b.nombre = ?1 ")
+	@NamedQuery(name="isRecyclable", query="SELECT r.esReciclable FROM Residuo r WHERE r.codigo = ?1 ")
 })
 public class Residuo {
 	@Id

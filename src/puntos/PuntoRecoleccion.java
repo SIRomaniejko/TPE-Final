@@ -8,13 +8,13 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name="isFull", query="SELECT 1 FROM PuntoRecoleccion p WHERE p.volumenParaRecolectar <= (SELECT SUM(r.volumen_total) FROM ResiduoRegistro r WHERE  p.id_recoleccion = r.id_recoleccion )AND p.id = ?1")
+		@NamedQuery(name="isFull", query="SELECT 1 FROM PuntoRecoleccion p WHERE p.volumenParaRecolectar <= (SELECT SUM(rr.volumenTotal) FROM ResiduoRegistro rr WHERE  p = rr.puntoRecoleccion )AND p.id = ?1")
 })
 public class PuntoRecoleccion {
 	@Id
 	@GeneratedValue
 	private int id;
-	@OneToMany
+	@OneToMany(mappedBy = "puntoRecoleccion")
 	private List<ResiduoRegistro> residuos;
 	@Column
 	private double volumenParaRecolectar;

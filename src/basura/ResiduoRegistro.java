@@ -8,10 +8,10 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name= "getBasuraUsuario", query="SELECT r FROM ResiduoRegistro r WHERE r.id_usuario = ?1"),
-	@NamedQuery(name="getRecicladosUsuario", query="SELECT r FROM ResiduoRegistro r WHERE r.id_usuario = ?1 AND r.fecha BETWEEN ?2 AND ?3 "),
-	@NamedQuery(name="getRecicladoLugar", query="SELECT r FROM ResiduoRegistro r WHERE r.puntorecoleccion = ?1 AND r.fecha BETWEEN ?2 AND ?3 "),
-	@NamedQuery(name="getHistorialPunto", query="SELECT rr FROM ResiduoRegistro rr  WHERE rr.id_puntorecoleccion = ?1 AND rr.fueRecolectado = true AND (SELECT r FROM Residuo r WHERE rr.id_basura = r.id_basura AND r.esReciclable = true)")
+	@NamedQuery(name= "getBasuraUsuario", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.usuario = ?1"),
+	@NamedQuery(name="getRecicladosUsuario", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.usuario = ?1 AND rr.fecha BETWEEN ?2 AND ?3 "),
+	@NamedQuery(name="getRecicladoLugar", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.puntoRecoleccion = ?1 AND rr.fecha BETWEEN ?2 AND ?3 "),
+	@NamedQuery(name="getHistorialPunto", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.fueRecolectado = TRUE AND rr.puntoRecoleccion = ?1")
 })
 
 
@@ -26,21 +26,29 @@ public class ResiduoRegistro {
 	@ManyToOne
 	private Usuario usuario;
 	@ManyToOne
-	private PuntoRecoleccion puntoRecolecion; 
+	private PuntoRecoleccion puntoRecoleccion; 
 	@Column
 	private Date fecha;
+	@Column
+	private boolean fueRecolectado;
+	@Column 
+	private double volumenTotal;
 	
-	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario usuario, PuntoRecoleccion puntoRecolecion,
+	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario usuario, PuntoRecoleccion puntoRecoleccion,
 			Date fecha) {
-		super();
 		this.residuo = residuo;
 		this.cantidad = cantidad;
 		this.usuario = usuario;
-		this.puntoRecolecion = puntoRecolecion;
+		this.puntoRecoleccion = puntoRecoleccion;
 		this.fecha = fecha;
+		this.fueRecolectado = false;
+		this.calcularVolumen();
 	}
 	
-	public ResiduoRegistro() {}
+	public ResiduoRegistro() {
+		this.fueRecolectado = false;
+		this.calcularVolumen();
+	}
 
 	public Residuo getResiduo() {
 		return residuo;
@@ -66,12 +74,12 @@ public class ResiduoRegistro {
 		this.usuario = persona;
 	}
 
-	public PuntoRecoleccion getPuntoRecolecion() {
-		return puntoRecolecion;
+	public PuntoRecoleccion getPuntorecoleccion() {
+		return puntoRecoleccion;
 	}
 
-	public void setPuntoRecolecion(PuntoRecoleccion puntoRecolecion) {
-		this.puntoRecolecion = puntoRecolecion;
+	public void setPuntorecoleccion(PuntoRecoleccion puntoRecoleccion) {
+		this.puntoRecoleccion = puntoRecoleccion;
 	}
 
 	public Date getFecha() {
@@ -80,5 +88,13 @@ public class ResiduoRegistro {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	
+	public void calcularVolumen() {
+		this.volumenTotal = this.cantidad*this.residuo.getVolumen();
+	}
+	
+	public double getVolumen() {
+		return this.volumenTotal;
 	}
 }
