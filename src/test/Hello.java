@@ -39,5 +39,4 @@ public class Hello {
     return "<html> " + "<title>" + this.sayPlainTextHello() + "</title>"
         + "<body><h1>" + this.sayPlainTextHello() + "</body></h1>" + "</html> ";
   }
-
 }

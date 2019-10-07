@@ -1,11 +1,11 @@
 package basura;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="isRecyclable", query="SELECT b.esReciclable FROM Basura b WHERE b.nombre = ?1 ")
+})
 public class Residuo {
 	@Id
 	@GeneratedValue
