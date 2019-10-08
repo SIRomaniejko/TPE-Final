@@ -1,5 +1,4 @@
 package test;
-
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
@@ -19,43 +18,43 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import users.Usuario;
+import basura.Residuo;
 
-public class testUsers {
+public class testResiduo {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	
+
 	@BeforeClass
 	public static void setEntityManagerFactory() {
 		emf = Persistence.createEntityManagerFactory("my_persistence_unit");
 		System.out.println("before class");
-		List<Usuario> usuarios = new ArrayList<>();
-		String csvFile = "src\\input\\usuario.csv";
+		List<Residuo> residuos = new ArrayList<>();
+		String csvFile = "src\\input\\residuo.csv";
 		String line;
 		String csvSplitBy = ",";
-		Usuario aux;
+		Residuo aux;
 
 		try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
 			while((line = br.readLine()) != null) {
 				String[] items = line.split(csvSplitBy);
-				aux = new Usuario(items[0], items[1], Integer.parseInt(items[2]), items[3], Double.parseDouble(items[4]), Double.parseDouble(items[5]));
-				usuarios.add(aux);
+				aux = new Residuo(items[0], Double.parseDouble(items[1]), Double.parseDouble(items[2]), Boolean.parseBoolean(items[3]));
+				residuos.add(aux);
 			}
-			System.out.println("Cargado Usuarios con exito");
+			System.out.println("Cargado Residuos con exito");
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		for (Usuario usuario: usuarios) {
-			em.persist(usuario);
+		for (Residuo residuo: residuos) {
+			em.persist(residuo);
 		}
 		em.getTransaction().commit();
 		em.close();
 	}
-	
-	
+
+
 	@AfterClass
 	public static void closeEntityManagerFactory() {
 		EntityManager em = emf.createEntityManager();
@@ -76,34 +75,14 @@ public class testUsers {
 		em.close();
 		System.out.println("after");
 	}
-	
-	@Test
-	public void getAll() {
-		Query query1 = em.createNamedQuery("getAll");
-		List<Usuario> result = query1.getResultList();
-		for(Usuario user: result) {
-			System.out.println(user.getNombre());
-		}
-		assertNotEquals(0, result.size());
-		
-	}
 
 	@Test
-	public void getByName() {
-		Query query = em.createNamedQuery("getByName");
-		List<Usuario> result  = query.setParameter(1, "Fenny").getResultList();
-		System.out.println(result.toString());
-		for(Usuario user: result) {
-			System.out.println(user.getNombre());
-			System.out.println(user.getApellido());
+	public void getAll() {
+		Query query1 = em.createNamedQuery("getAllResiduos");
+		List<Residuo> result = query1.getResultList();
+		for(Residuo residuo: result) {
+			System.out.println(residuo.getNombre());
 		}
 		assertNotEquals(0, result.size());
-	}
-	@Test
-	public void getNombre() {
-		Query query = em.createNamedQuery("getNombre");
-		String nombre = (String) query.setParameter(1, 3333).getSingleResult();
-		assertNotNull(nombre);
-		System.out.println(nombre + "xDDD");
 	}
 }
