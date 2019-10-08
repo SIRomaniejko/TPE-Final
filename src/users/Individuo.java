@@ -1,13 +1,17 @@
 package users;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import basura.ResiduoRegistro;
+
 @Entity
 @Table(name="table_individuo")
-public class Individuo{
+public abstract class Individuo{
 	
 	@Id
 	private String identificador;
@@ -30,5 +34,9 @@ public class Individuo{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	
+	public abstract List<Usuario> getUsuarios();
+	
 	
 }

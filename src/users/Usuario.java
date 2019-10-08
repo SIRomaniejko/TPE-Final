@@ -1,5 +1,8 @@
 package users;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -53,5 +56,11 @@ public class Usuario extends Individuo{
 	}
 	public String toString() {
 		return super.getNombre() + "; " + this.apellido;
+	}
+	@Override
+	public List<Usuario> getUsuarios() {
+		ArrayList<Usuario> regreso = new ArrayList<Usuario>();
+		regreso.add(this);
+		return regreso;
 	}
 }

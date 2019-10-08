@@ -1,20 +1,22 @@
 package users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 @Entity
 public class Grupo extends Individuo{
 	@Column
 	private String tipoGrupo;
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Individuo> individuos;
 	
 	public Grupo(String tipoGrupo, String nombre, List<Individuo> individuos, double longitud, double latitud) {
-		super("xD",nombre,latitud,longitud);
+		super(nombre,nombre,latitud,longitud);
 		this.tipoGrupo = tipoGrupo;
 		this.individuos = individuos;
 	}
@@ -30,7 +32,18 @@ public class Grupo extends Individuo{
 	public List<Individuo> getIndividuos() {
 		return individuos;
 	}
-	public void setIndividuos(List<Individuo> individuos) {
-		this.individuos = individuos;
+	public void addIndividuo(Individuo newIndividuo) {
+		this.individuos.add(newIndividuo);
 	}
+	
+	@Override
+	public List<Usuario> getUsuarios() {
+		ArrayList<Usuario>usuarios = new ArrayList<Usuario>();
+		for(Individuo miembro: individuos) {
+			List<Usuario> miembros = miembro.getUsuarios();
+			usuarios.addAll(miembros);
+		}
+		return usuarios;
+	}
+	
 }

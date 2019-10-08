@@ -2,12 +2,9 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,7 +15,8 @@ import org.junit.Test;
 import users.Grupo;
 import users.Usuario;
 
-public class testUsers {
+public class testGrupo {
+	
 	private static EntityManagerFactory emf;
 	private EntityManager em;
 	
@@ -34,6 +32,8 @@ public class testUsers {
 		Usuario personaDefault4 = new Usuario("ba", "ree", 4444, "domicilio", 1, 1);
 		Usuario personaDefault5 = new Usuario("haha", "koko", 5555, "domicilio", 1, 1);
 		Grupo grupoDefault1 = new Grupo("barrio", "los pibes", null, 1, 1);
+		grupoDefault1.addIndividuo(personaDefault2);
+		grupoDefault1.addIndividuo(personaDefault1);
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(personaDefault1);
@@ -41,6 +41,7 @@ public class testUsers {
 		em.persist(personaDefault5);
 		em.persist(personaDefault3);
 		em.persist(personaDefault4);
+		em.persist(grupoDefault1);
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -51,6 +52,7 @@ public class testUsers {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.createQuery("DELETE FROM Usuario").executeUpdate();
+		em.createQuery("DELETE FROM Grupo").executeUpdate();
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
@@ -66,34 +68,5 @@ public class testUsers {
 		em.close();
 		System.out.println("after");
 	}
-	
-	@Test
-	public void getAll() {
-		Query query1 = em.createNamedQuery("getAll");
-		List<Usuario> result = query1.getResultList();
-		for(Usuario user: result) {
-			System.out.println(user.getNombre());
-		}
-		assertNotEquals(0, result.size());
-		
-	}
-	
-	@Test
-	public void getByName() {
-		Query query = em.createNamedQuery("getByName");
-		List<Usuario> result  = query.setParameter(1, "yisu").getResultList();
-		System.out.println(result.toString());
-		for(Usuario user: result) {
-			System.out.println(user.getNombre());
-			System.out.println(user.getApellido());
-		}
-		assertNotEquals(0, result.size());
-	}
-	@Test
-	public void getNombre() {
-		Query query = em.createNamedQuery("getNombre");
-		String nombre = (String) query.setParameter(1, 3333).getSingleResult();
-		assertNotNull(nombre);
-		System.out.println(nombre + "xDDD");
-	}
+
 }
