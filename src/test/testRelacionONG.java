@@ -32,10 +32,11 @@ public class testRelacionONG {
 		System.out.println("before class");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		residuo.setOngPertenece(ong);
+		//residuo.setOngPertenece(ong);
+		ong.addResiduos(residuo);
 		System.out.println(residuo.getOngPertenece() != null);
-		em.persist(residuo);
 		em.persist(ong);
+		em.persist(residuo);
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -66,9 +67,10 @@ public class testRelacionONG {
 	}
 	
 	@Test
-	public void laRePutaMadre() {
-		System.out.println("concha de tu hermana puta");
+	public void testRelacion() {
+		System.out.println("testRelacion");
 		System.out.println(((Residuo) em.createQuery("SELECT c FROM Residuo c").getSingleResult()).getOngPertenece() != null);
 		System.out.println(((ONG) em.createQuery("SELECT a FROM ONG a").getResultList().get(0)).noEsVacio());
+		System.out.println(((ONG) em.createQuery("SELECT c FROM ONG c").getResultList().get(0)).getResiduos().size());
 	}
 }

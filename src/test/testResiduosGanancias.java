@@ -39,6 +39,7 @@ public class testResiduosGanancias {
 	static ResiduoRegistro residuoRegistro3 = new ResiduoRegistro(residuoa, 3, user2, null, new Date(2000, 1, 3));
 	static ResiduoRegistro residuoRegistro4 = new ResiduoRegistro(residuob, 3, user1, null, new Date(2000, 1, 3));
 	static ONG ong = new ONG("carinias");
+	static ONG ong2 = new ONG("carotas");
 	
 	
 	@BeforeClass
@@ -47,6 +48,8 @@ public class testResiduosGanancias {
 		System.out.println("before class");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
+		ong.addResiduos(residuoa);
+		ong2.addResiduos(residuob);
 		em.persist(user1);
 		em.persist(user2);
 		em.persist(user3);
@@ -57,6 +60,7 @@ public class testResiduosGanancias {
 		em.persist(residuoRegistro3);
 		em.persist(residuoRegistro4);
 		em.persist(ong);
+		em.persist(ong2);
 		em.getTransaction().commit();
 		em.close();
 	}
@@ -142,4 +146,17 @@ public class testResiduosGanancias {
 		}
 	}
 	
+	@Test 
+	public void testGananciasONG() {
+		System.out.println("sizeong");
+		System.out.println(((ONG) em.createQuery("SELECT c FROM ONG c").getResultList().get(0)).getResiduos().size());
+		Query query = em.createNamedQuery("getAhorroAONG");
+		query.setParameter(1, user1);
+		List<Object[]> resultado = query.getResultList();
+		System.out.println("pwease owo");
+		for(Object[] reciclado: resultado) {
+			System.out.println(reciclado[0]);
+			System.out.println(reciclado[1]);
+		}
+	}
 }

@@ -12,9 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-@Entity 
+@Entity
+@NamedQueries({
+	
+})
 public class ONG {
 	@Id
 	@GeneratedValue
@@ -26,6 +31,7 @@ public class ONG {
 
 	public ONG(String nombre) {
 		this.nombre = nombre;
+		residuosONG = new ArrayList<Residuo>();
 	}
 
 	public ONG() {
@@ -35,4 +41,12 @@ public class ONG {
 		return this.residuosONG.size() != 0;
 	}
 	
+	public void addResiduos(Residuo newResiduo) {
+		newResiduo.setOngPertenece(this);
+		this.residuosONG.add(newResiduo);
+	}
+	
+	public List<Residuo> getResiduos(){
+		return this.residuosONG;
+	}
 }
