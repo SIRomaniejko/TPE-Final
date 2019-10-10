@@ -16,7 +16,9 @@ import javax.persistence.Table;
 	@NamedQuery(name="getAll", query="SELECT u FROM Usuario u"),
 	@NamedQuery(name="getNombre", query="SELECT u.nombre FROM Usuario u WHERE u.dni = ?1"),
 	@NamedQuery(name="deleteAllUsers", query="DELETE FROM Usuario"),
-	@NamedQuery(name="getByDni", query="SELECT u FROM Usuario u WHERE u.dni = ?1")
+	@NamedQuery(name="getByDni", query="SELECT u FROM Usuario u WHERE u.dni = ?1"),
+	@NamedQuery(name="getAhorroUsuarioTotal", query="SELECT SUM(rr.cantidad) * MAX(r.valor) FROM ResiduoRegistro rr JOIN rr.residuo r WHERE rr.usuario = ?1 GROUP BY rr.residuo"),
+	@NamedQuery(name="getAhorroUsuario", query="SELECT SUM(rr.cantidad) * MAX(r.valor), r.nombre FROM ResiduoRegistro rr JOIN rr.residuo r WHERE rr.usuario = ?1 GROUP BY rr.residuo, r.nombre")
 }) 
 public class Usuario extends Individuo{
 	@Column

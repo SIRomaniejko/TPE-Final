@@ -2,6 +2,8 @@ package basura;
 
 import javax.persistence.*;
 
+import organizaciones.ONG;
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name="getAllResiduos", query="SELECT r FROM Residuo r"),
@@ -19,7 +21,18 @@ public class Residuo {
 	private double valor;
 	@Column
 	private boolean esReciclable;
+	@ManyToOne
+	@JoinColumn
+	private ONG ongPertenece;
 	
+	public ONG getOngPertenece() {
+		return ongPertenece;
+	}
+
+	public void setOngPertenece(ONG ongPertenece) {
+		this.ongPertenece = ongPertenece;
+	}
+
 	public Residuo(String nombre, double volumen, double valor, boolean esReciclable) {
 		this.nombre = nombre;
 		this.volumen = volumen;
@@ -64,6 +77,8 @@ public class Residuo {
 	public void setEsReciclable(boolean esReciclable) {
 		this.esReciclable = esReciclable;
 	}
+	
+	
 	
 	
 

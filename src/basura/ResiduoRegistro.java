@@ -49,7 +49,7 @@ public class ResiduoRegistro {
 	}
 
 	public Residuo getResiduo() {
-		return residuo;
+		return this.residuo;
 	}
 
 	public void setResiduo(Residuo residuo) {
@@ -57,7 +57,7 @@ public class ResiduoRegistro {
 	}
 
 	public int getCantidad() {
-		return cantidad;
+		return this.cantidad;
 	}
 
 	public void setCantidad(int cantidad) {

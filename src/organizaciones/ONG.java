@@ -1,32 +1,38 @@
 package organizaciones;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import basura.Residuo;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity 
 public class ONG {
 	@Id
 	@GeneratedValue
 	private int id;
-	@ManyToMany
-	private List<Residuo> residuos;
+	@Column
+	private String nombre;
+	@OneToMany(mappedBy="ongPertenece")
+	private List<Residuo> residuosONG;
 
-	public ONG(List<Residuo> residuos) {
-		this.residuos = residuos;
+	public ONG(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public ONG() {}
+	public ONG() {
+	}
 	
-	public List<Residuo> getResiduos() {
-		return residuos;
+	public boolean noEsVacio() {
+		return this.residuosONG.size() != 0;
 	}
-
-	public void setResiduos(List<Residuo> residuos) {
-		this.residuos = residuos;
-	}	
+	
 }
