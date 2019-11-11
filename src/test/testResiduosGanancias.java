@@ -153,7 +153,6 @@ public class testResiduosGanancias {
 		Query query = em.createNamedQuery("getAhorroAONG");
 		query.setParameter(1, user1);
 		List<Object[]> resultado = query.getResultList();
-		System.out.println("pwease owo");
 		for(Object[] reciclado: resultado) {
 			System.out.println(reciclado[0]);
 			System.out.println(reciclado[1]);
