@@ -1,10 +1,20 @@
 package puntos;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.List;
 
+@Entity
 public class Ubicacion {
-	double x;
-	double y;
+	@Id
+	@GeneratedValue
+	private int id;
+	@Column
+	private double x;
+	@Column
+	private double y;
 	public Ubicacion(double x, double y) {
 		super();
 		this.x = x;

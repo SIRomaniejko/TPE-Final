@@ -2,12 +2,9 @@ package users;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import basura.ResiduoRegistro;
+import puntos.Ubicacion;
 
 @Entity
 @Table(name="table_individuo")
@@ -17,10 +14,13 @@ public abstract class Individuo{
 	private String identificador;
 	@Column
 	private String nombre;
+	@OneToOne
+	private Ubicacion ubicacion;
 
 	public Individuo(String id, String nombre, double latitud, double longitud) {
 		this.identificador = id;
 		this.nombre = nombre;
+		ubicacion = new Ubicacion(latitud,longitud);
 	}
 	
 	public Individuo() {

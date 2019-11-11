@@ -20,10 +20,13 @@ public class PuntoRecoleccion {
 	private List<ResiduoRegistro> residuos;
 	@Column
 	private double volumenParaRecolectar;
+	@OneToOne
+	private Ubicacion ubicacion;
 	
-	public PuntoRecoleccion(double volumenParaRecolectar) {
+	public PuntoRecoleccion(double volumenParaRecolectar, double latitud, double longitud) {
 		this.residuos = new ArrayList<ResiduoRegistro>();
 		this.volumenParaRecolectar = volumenParaRecolectar;
+		this.ubicacion = new Ubicacion(latitud,longitud);
 	}
 	
 	public PuntoRecoleccion() {}
@@ -43,5 +46,13 @@ public class PuntoRecoleccion {
 	}
 	public void setVolumenParaRecolectar(double volumenParaRecolectar) {
 		this.volumenParaRecolectar = volumenParaRecolectar;
+	}
+
+	public Ubicacion getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(Ubicacion ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 }

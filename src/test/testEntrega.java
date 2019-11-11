@@ -48,7 +48,7 @@ public class testEntrega {
 		Residuo residuoDefault5 = new Residuo("cajaCarton", 10, 15, true);
 		ONG ongdefault1 = new ONG("garrahan");
 		ongdefault1.addResiduos(residuoDefault2);
-		PuntoRecoleccion puntoDefault = new PuntoRecoleccion(100);
+		PuntoRecoleccion puntoDefault = new PuntoRecoleccion(100,1,1);
 		
 		ResiduoRegistro rrDefault1 = new ResiduoRegistro(residuoDefault2, 2, personaDefault1, puntoDefault, new Date(2018, 1, 3));
 		ResiduoRegistro rrDefault2 = new ResiduoRegistro(residuoDefault1, 6, personaDefault4, puntoDefault, new Date(2018, 1, 4));

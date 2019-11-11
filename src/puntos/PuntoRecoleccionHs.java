@@ -14,8 +14,8 @@ public class PuntoRecoleccionHs extends PuntoRecoleccion{
 	private int horarioCierre;
 	
 	public PuntoRecoleccionHs(List<ResiduoRegistro> residuos, double volumenParaRecolectar, int horarioInicio,
-			int horarioCierre) {
-		super(volumenParaRecolectar);
+			int horarioCierre, double latitud, double longitud) {
+		super(volumenParaRecolectar, latitud, longitud);
 		this.horarioInicio = horarioInicio;
 		this.horarioCierre = horarioCierre;
 	}

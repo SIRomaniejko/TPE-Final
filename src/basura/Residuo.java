@@ -1,14 +1,19 @@
 package basura;
 
 import javax.persistence.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import organizaciones.ONG;
 
 @Entity
 @NamedQueries({
 	@NamedQuery(name="getAllResiduos", query="SELECT r FROM Residuo r"),
+	@NamedQuery(name="getResiduo", query="SELECT r FROM Residuo r WHERE r.codigo = ?1"),
 	@NamedQuery(name="isRecyclable", query="SELECT r.esReciclable FROM Residuo r WHERE r.codigo = ?1 ")
 })
+@Path("/residuo")
 public class Residuo {
 	@Id
 	@GeneratedValue
@@ -41,7 +46,10 @@ public class Residuo {
 	}
 
 	public Residuo() {}
-	
+
+	@Path("/nombre")
+	@GET
+	@Produces("application/json")
 	public String getNombre() {
 		return nombre;
 	}

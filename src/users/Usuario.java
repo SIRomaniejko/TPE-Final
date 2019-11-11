@@ -1,5 +1,7 @@
 package users;
 
+import puntos.Ubicacion;
+
 import java.util.ArrayList;
 import java.util.List;
 

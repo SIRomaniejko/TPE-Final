@@ -45,7 +45,11 @@ public class ONG {
 		newResiduo.setOngPertenece(this);
 		this.residuosONG.add(newResiduo);
 	}
-	
+
+	public String getNombre(){
+		return this.nombre;
+	}
+
 	public List<Residuo> getResiduos(){
 		return this.residuosONG;
 	}
