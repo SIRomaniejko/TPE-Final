@@ -15,6 +15,7 @@ public class Ubicacion {
 	private double x;
 	@Column
 	private double y;
+
 	public Ubicacion(double x, double y) {
 		super();
 		this.x = x;

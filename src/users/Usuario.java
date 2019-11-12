@@ -31,7 +31,7 @@ public class Usuario extends Individuo{
 	@Column
 	private String domicilio;
 	
-	public Usuario(String nombre, String apellido, int dni, String domicilio, double longitud, double latitud) {
+	public Usuario(String nombre, String apellido, int dni, String domicilio, double latitud, double longitud) {
 		super(((Integer)dni).toString(), nombre,latitud,longitud);
 		this.apellido = apellido;
 		this.dni = dni;

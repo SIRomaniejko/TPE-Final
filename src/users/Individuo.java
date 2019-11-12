@@ -34,7 +34,14 @@ public abstract class Individuo{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+	public void setUbicacion(Ubicacion u){
+		this.ubicacion = u;
+	}
+
+	public Ubicacion getUbicacion(){
+		return this.ubicacion;
+	}
 	
 	public abstract List<Usuario> getUsuarios();
 	

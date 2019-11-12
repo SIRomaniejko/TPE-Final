@@ -7,25 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aea50b82-6fcd-49d3-96f7-f3c8f9e6824c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_base_2_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_json_provider_2_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_jaxb_annotations_2_5_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_ext_jersey_entity_filtering_2_23.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_media_jersey_media_json_jackson_2_23.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/Api.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TPE_Final_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/TPE_Final_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebContent/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/basura/Residuo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/basura/Residuo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/organizaciones/ONG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/organizaciones/ONG.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/puntos/PuntoRecoleccion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/puntos/PuntoRecoleccion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/puntos/PuntoRecoleccionHs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/puntos/PuntoRecoleccionHs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/puntos/Ubicacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/puntos/Ubicacion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testEntrega.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testEntrega.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/users/Individuo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/Individuo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/users/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/Usuario.java" afterDir="false" />
     </list>
@@ -239,6 +223,7 @@
       <workItem from="1570562489406" duration="4937000" />
       <workItem from="1571682525571" duration="212000" />
       <workItem from="1573496484196" duration="9008000" />
+      <workItem from="1573587722243" duration="3523000" />
     </task>
     <servers />
   </component>
@@ -259,7 +244,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
