@@ -3,8 +3,11 @@ package api;
 import basura.Residuo;
 import users.Usuario;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -74,11 +77,7 @@ public class Api {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Usuario> getUsuario(){
 		
-		em.getTransaction().begin();
-		Usuario personaDefault1 = new Usuario("jose", "olmedo", 1111, "domicilio", 1, 1);
-		this.em.persist(personaDefault1);
-		this.em.getTransaction().commit();
-		System.out.println("Persistido Usuarios con exito");
+	
 		
 		Query query = this.em.createNamedQuery("getAll");
 		List<Usuario> result = query.getResultList();
@@ -100,5 +99,26 @@ public class Api {
 			result = null;
 		}
 		return result;
+	}
+	
+	@Path("/usuario")
+	@POST
+	public void newUsuario() {
+		em.getTransaction().begin();
+		Usuario personaDefault1 = new Usuario("jose", "olmedo", 1111, "domicilio", 1, 1);
+		this.em.persist(personaDefault1);
+		this.em.getTransaction().commit();
+		System.out.println("Persistido Usuarios con exito");
+		
+	}
+	@Path("/residuos")
+	@POST
+	public void newResiduo() {
+		em.getTransaction().begin();
+		Residuo nuevoResiduo = new Residuo("d", 1, 1, true);
+		this.em.persist(nuevoResiduo);
+		this.em.getTransaction().commit();
+		System.out.println("Persistido residuo con exito");
+		
 	}
 }
