@@ -17,12 +17,10 @@ import java.util.List;
 
 @Path("/rest")
 public class Api {
-	private EntityManagerFactory emf;
 	private EntityManager em;
 
 	public Api(){
-		this.emf = Persistence.createEntityManagerFactory("my_persistence_unit");
-		this.em = emf.createEntityManager();
+		this.em = EMF.createEntityManager(); //EMF se encarga de que haya un solo entity manager factory
 //		List<Usuario> usuarios = new ArrayList<>();
 //		String csvFile = "C:\\Users\\tutip\\Documents\\0000TUDAI\\Proyectos Java\\Arquitecturas Web\\TPE-Final\\src\\input\\usuario.csv";
 //		String line;
@@ -43,12 +41,6 @@ public class Api {
 //		for (Usuario usuario: usuarios) {
 //			this.em.persist(usuario);
 //		}
-		em.getTransaction().begin();
-		Usuario u = new Usuario("Hero", "Carpi", 2, "pepe", 12.3,13.2);
-		this.em.persist(u);
-		this.em.getTransaction().commit();
-		System.out.println("Persistido Usuarios con exito");
-		this.em.close();
 	}
 
 	@Path("/residuos")
@@ -57,6 +49,7 @@ public class Api {
 	public List<Residuo> getResiduos(){
 		Query query = this.em.createNamedQuery("getAllResiduos");
 		List<Residuo> result = query.getResultList();
+		System.out.println(result);
 		return result;
 	}
 
@@ -80,8 +73,16 @@ public class Api {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Usuario> getUsuario(){
+		
+		em.getTransaction().begin();
+		Usuario personaDefault1 = new Usuario("jose", "olmedo", 1111, "domicilio", 1, 1);
+		this.em.persist(personaDefault1);
+		this.em.getTransaction().commit();
+		System.out.println("Persistido Usuarios con exito");
+		
 		Query query = this.em.createNamedQuery("getAll");
 		List<Usuario> result = query.getResultList();
+		this.em.close();
 		return result;
 	}
 

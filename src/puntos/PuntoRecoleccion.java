@@ -20,7 +20,7 @@ public class PuntoRecoleccion {
 	private List<ResiduoRegistro> residuos;
 	@Column
 	private double volumenParaRecolectar;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Ubicacion ubicacion;
 	
 	public PuntoRecoleccion(double volumenParaRecolectar, double latitud, double longitud) {

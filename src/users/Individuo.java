@@ -14,7 +14,7 @@ public abstract class Individuo{
 	private String identificador;
 	@Column
 	private String nombre;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Ubicacion ubicacion;
 
 	public Individuo(String id, String nombre, double latitud, double longitud) {

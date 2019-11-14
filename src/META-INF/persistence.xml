@@ -12,6 +12,7 @@
 		<class>organizaciones.ONG</class>
 		<class>basura.Residuo</class>
 		<class>basura.ResiduoRegistro</class>
+		<class>puntos.Ubicacion</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
 				value="org.apache.derby.jdbc.EmbeddedDriver" />
