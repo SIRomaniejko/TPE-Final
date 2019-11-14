@@ -36,7 +36,7 @@ public class Grupo extends Individuo{
 		this.individuos.add(newIndividuo);
 	}
 	
-	@Override
+//	@Override
 	public List<Usuario> getUsuarios() {
 		ArrayList<Usuario>usuarios = new ArrayList<Usuario>();
 		for(Individuo miembro: individuos) {

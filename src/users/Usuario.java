@@ -11,6 +11,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @NamedQueries({
@@ -62,7 +64,8 @@ public class Usuario extends Individuo{
 	public String toString() {
 		return super.getNombre() + "; " + this.apellido;
 	}
-	@Override
+	
+	@JsonIgnore
 	public List<Usuario> getUsuarios() {
 		ArrayList<Usuario> regreso = new ArrayList<Usuario>();
 		regreso.add(this);
