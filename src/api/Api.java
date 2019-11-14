@@ -103,7 +103,8 @@ public class Api {
 	@POST
 	public void usuariosDefault() {
 		List<Usuario> usuarios = new ArrayList<>();
-		String csvFile = "C:\\Users\\Asus\\arquitecturas-workspace\\TPE-Final\\src\\input\\usuario.csv";
+		//String csvFile = "C:\\Users\\Asus\\arquitecturas-workspace\\TPE-Final\\src\\input\\usuario.csv";
+		String csvFile = "C:\\Users\\tutip\\Documents\\0000TUDAI\\Proyectos Java\\Arquitecturas Web\\TPE-Final\\src\\input\\usuario.csv";
 		String line;
 		String csvSplitBy = ",";
 		Usuario aux;
