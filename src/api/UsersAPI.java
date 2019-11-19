@@ -5,7 +5,9 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -39,7 +41,12 @@ public class UsersAPI extends Api{
 	public Usuario getUsuario(@PathParam("id") int id) {
 		Query busqueda = this.em.createNamedQuery("getByDni", Usuario.class);
 		busqueda.setParameter(1, id);
-		Usuario resultado = (Usuario)busqueda.getSingleResult();
+		Usuario resultado = null;
+		try {
+			resultado = (Usuario)busqueda.getSingleResult();
+		}
+		catch(NoResultException exc) {
+		}
 		this.em.close();
 		return resultado;
 	}
@@ -55,14 +62,47 @@ public class UsersAPI extends Api{
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateUsuario(@PathParam("id") int id, Usuario usuarioNuevo) {
-		System.out.println("testingu");
-		System.out.println(usuarioNuevo);
-		System.out.println(usuarioNuevo.getApellido());
-		System.out.println(usuarioNuevo.getNombre());
-		System.out.println(usuarioNuevo.getUbicacion().getX());
-		System.out.println(usuarioNuevo.getUbicacion().getY());
+	public Response updateUsuario(@PathParam("id") String id, Usuario usuarioNuevo) {
+		this.em.getTransaction().begin();
+		Usuario usuario = this.em.find(Usuario.class, id);
+		usuario.copyUser(usuarioNuevo);
+		em.merge(usuario);
+		this.em.getTransaction().commit();
+		this.em.close();
+		return Response.status(200).entity(usuario).build();
+	}
+	
+	@Path("/personas")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response postUsuario(Usuario usuarioNuevo) {
+		this.em.getTransaction().begin();
+		em.persist(usuarioNuevo);
+		this.em.getTransaction().commit();
+		this.em.close();
+		return Response.status(200).entity(usuarioNuevo).build();
+	}
+	
+	@Path("/personas")
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteUsuarios() {
 		this.em.close();
 		return Response.status(403).build();
 	}
+	
+	@Path("/personas/{id}")
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteUsuario(@PathParam("id") String id) {
+		
+		Usuario a = this.em.find(Usuario.class, id);
+		this.em.getTransaction().begin();
+		this.em.remove(a);
+		this.em.getTransaction().commit();
+		this.em.close();
+		return Response.status(200).entity(a).build();
+	}
+	
 }

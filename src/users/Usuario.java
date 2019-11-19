@@ -56,6 +56,14 @@ public class Usuario extends Individuo{
 		return super.getNombre() + "; " + this.apellido;
 	}
 	
+	public void copyUser(Usuario userCopy) {
+		this.setDni(userCopy.getDni());
+		this.setApellido(userCopy.getApellido());
+		this.setNombre(userCopy.getNombre());
+		this.setUbicacion(userCopy.getUbicacion()); 
+		this.setId(userCopy.getId());
+	}
+	
 	@JsonIgnore
 	public List<Usuario> getUsuarios() {
 		ArrayList<Usuario> regreso = new ArrayList<Usuario>();

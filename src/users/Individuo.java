@@ -42,7 +42,12 @@ public abstract class Individuo{
 	public Ubicacion getUbicacion(){
 		return this.ubicacion;
 	}
-	
+	public String getId() {
+		return this.identificador;
+	}
+	public void setId(String identificador) {
+		this.identificador = identificador;
+	}
 	public abstract List<Usuario> getUsuarios();
 	
 	
