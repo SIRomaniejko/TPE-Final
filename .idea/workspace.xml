@@ -7,10 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aea50b82-6fcd-49d3-96f7-f3c8f9e6824c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Java_EE_6_Java_EE_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/api/ResiduosAPI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/input/usuario.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/input/usuario.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -223,6 +221,7 @@
       <workItem from="1571682525571" duration="212000" />
       <workItem from="1573496484196" duration="9008000" />
       <workItem from="1573587722243" duration="3523000" />
+      <workItem from="1574192748355" duration="1192000" />
     </task>
     <servers />
   </component>
