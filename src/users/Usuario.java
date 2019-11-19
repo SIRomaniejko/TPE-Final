@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="getByName", query="SELECT u FROM Usuario u WHERE u.nombre = ?1"),
-	@NamedQuery(name="getAll", query="SELECT u FROM Usuario u"),
+	@NamedQuery(name="getAllUsers", query="SELECT u FROM Usuario u"),
 	@NamedQuery(name="getNombre", query="SELECT u.nombre FROM Usuario u WHERE u.dni = ?1"),
 	@NamedQuery(name="deleteAllUsers", query="DELETE FROM Usuario"),
 	@NamedQuery(name="getByDni", query="SELECT u FROM Usuario u WHERE u.dni = ?1"),
@@ -30,14 +30,11 @@ public class Usuario extends Individuo{
 	private int dni;
 	@Column
 	private String apellido;
-	@Column
-	private String domicilio;
 	
-	public Usuario(String nombre, String apellido, int dni, String domicilio, double latitud, double longitud) {
+	public Usuario(String nombre, String apellido, int dni, double latitud, double longitud) {
 		super(((Integer)dni).toString(), nombre,latitud,longitud);
 		this.apellido = apellido;
 		this.dni = dni;
-		this.domicilio = domicilio;
 	}
 	public Usuario() {
 		
@@ -54,12 +51,6 @@ public class Usuario extends Individuo{
 	}
 	public void setDni(int dni) {
 		this.dni = dni;
-	}
-	public String getDomicilio() {
-		return domicilio;
-	}
-	public void setDomicilio(String domicilio) {
-		this.domicilio = domicilio;
 	}
 	public String toString() {
 		return super.getNombre() + "; " + this.apellido;
