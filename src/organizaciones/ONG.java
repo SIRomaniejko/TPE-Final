@@ -16,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQueries({
 	
@@ -45,11 +47,15 @@ public class ONG {
 		newResiduo.setOngPertenece(this);
 		this.residuosONG.add(newResiduo);
 	}
-
+	
 	public String getNombre(){
 		return this.nombre;
 	}
-
+	public int getId() {
+		return this.id;
+	}
+	
+	@JsonIgnore
 	public List<Residuo> getResiduos(){
 		return this.residuosONG;
 	}

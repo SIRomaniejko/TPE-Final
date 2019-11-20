@@ -1,6 +1,7 @@
 package api;
 
 import basura.Residuo;
+import organizaciones.ONG;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -60,12 +61,28 @@ public class ResiduosAPI extends Api{
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response postResiduo(Residuo residuoNuevo) {
 		this.em.getTransaction().begin();
-		em.persist(residuoNuevo);
+		Residuo residuoPersistir = new Residuo(residuoNuevo.getNombre(), residuoNuevo.getVolumen(), residuoNuevo.getValor(), residuoNuevo.isEsReciclable());
+		ONG ongPersistir = em.find(ONG.class, residuoNuevo.getOngPertenece().getId());
+		if(ongPersistir == null) {
+			ongPersistir = new ONG(residuoNuevo.getOngPertenece().getNombre());
+			ongPersistir.addResiduos(residuoPersistir);
+			em.persist(ongPersistir);
+		}
+		else {
+			ongPersistir.addResiduos(residuoPersistir);
+			em.merge(ongPersistir);
+		}
+		this.em.persist(residuoPersistir);
 		this.em.getTransaction().commit();
 		this.em.close();
 		return Response.status(200).entity(residuoNuevo).build();
 	}
-
+//	Residuo residuoDefault2 = new Residuo("tapita", 0.1, 5, true);
+//	ONG ongdefault1 = em.find(ONG.class, 2);
+//	ongdefault1.addResiduos(residuoDefault2);
+//	this.em.getTransaction().begin();
+//	this.em.persist(residuoDefault2);
+//	this.em.merge(ongdefault1);
 	@Path("/residuo")
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,7 +95,7 @@ public class ResiduosAPI extends Api{
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteResiduo(@PathParam("id") String id) {
-
+		
 		Residuo a = this.em.find(Residuo.class, id);
 		this.em.getTransaction().begin();
 		this.em.remove(a);
