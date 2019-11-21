@@ -7,6 +7,8 @@ import basura.ResiduoRegistro;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQueries({
 		@NamedQuery(name="isFull", query="SELECT 1 FROM PuntoRecoleccion p WHERE p.volumenParaRecolectar <= (SELECT SUM(rr.volumenTotal) FROM ResiduoRegistro rr WHERE  p = rr.puntoRecoleccion )AND p.id = ?1"),
@@ -31,11 +33,16 @@ public class PuntoRecoleccion {
 	
 	public PuntoRecoleccion() {}
 	
+	@JsonIgnore
 	public List<ResiduoRegistro> getResiduos() {
 		return residuos;
 	}
 	public void setResiduos(List<ResiduoRegistro> residuos) {
 		this.residuos = residuos;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	public void addResiduo(ResiduoRegistro residuo) {
@@ -54,5 +61,10 @@ public class PuntoRecoleccion {
 
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+	
+	public void copy(PuntoRecoleccion copiar) {
+		this.volumenParaRecolectar = copiar.getVolumenParaRecolectar();
+		this.ubicacion = copiar.getUbicacion();
 	}
 }

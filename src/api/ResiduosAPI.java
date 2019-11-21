@@ -83,12 +83,6 @@ public class ResiduosAPI extends Api{
 		this.em.close();
 		return Response.status(200).entity(residuoPersistir).build();
 	}
-//	Residuo residuoDefault2 = new Residuo("tapita", 0.1, 5, true);
-//	ONG ongdefault1 = em.find(ONG.class, 2);
-//	ongdefault1.addResiduos(residuoDefault2);
-//	this.em.getTransaction().begin();
-//	this.em.persist(residuoDefault2);
-//	this.em.merge(ongdefault1);
 	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)

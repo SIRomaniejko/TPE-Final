@@ -24,6 +24,8 @@ public class Api {
 	public Api(){
 		this.em = EMF.createEntityManager(); //EMF se encarga de que haya un solo entity manager factory
 	}
+	
+	
 
 //	@Path("/residuos")
 //	@GET

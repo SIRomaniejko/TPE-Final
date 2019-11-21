@@ -19,7 +19,7 @@ import users.Usuario;
 
 @Path("/users")
 public class UsersAPI extends Api{
-	@Path("/personas")
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Usuario> getAllUsuarios(){
@@ -35,7 +35,7 @@ public class UsersAPI extends Api{
 		}
 		
 	}
-	@Path("/personas/{id}")
+	@Path("/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Usuario getUsuario(@PathParam("id") int id) {
@@ -51,14 +51,14 @@ public class UsersAPI extends Api{
 		return resultado;
 	}
 	
-	@Path("/personas")
+	
 	@PUT
 	public Response updateUsuarios() {
 		this.em.close();
 		return Response.status(403).build();
 	}
 	
-	@Path("/personas/{id}")
+	@Path("/{id}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -72,7 +72,7 @@ public class UsersAPI extends Api{
 		return Response.status(200).entity(usuario).build();
 	}
 	
-	@Path("/personas")
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -84,7 +84,7 @@ public class UsersAPI extends Api{
 		return Response.status(200).entity(usuarioNuevo).build();
 	}
 	
-	@Path("/personas")
+	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteUsuarios() {
@@ -92,7 +92,7 @@ public class UsersAPI extends Api{
 		return Response.status(403).build();
 	}
 	
-	@Path("/personas/{id}")
+	@Path("/{id}")
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteUsuario(@PathParam("id") String id) {
