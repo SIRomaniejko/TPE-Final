@@ -16,7 +16,7 @@ public class Grupo extends Individuo{
 	private List<Individuo> individuos;
 	
 	public Grupo(String tipoGrupo, String nombre, List<Individuo> individuos, double longitud, double latitud) {
-		super(nombre,nombre,latitud,longitud);
+		super(nombre,latitud,longitud);
 		this.tipoGrupo = tipoGrupo;
 		this.individuos = new ArrayList<Individuo>();
 	}

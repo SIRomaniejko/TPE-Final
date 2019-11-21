@@ -12,7 +12,8 @@ import javax.persistence.*;
 	@NamedQuery(name="getRecicladosUsuario", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.usuario = ?1 AND rr.fecha BETWEEN ?2 AND ?3 "),
 	@NamedQuery(name="getRecicladoLugar", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.puntoRecoleccion = ?1 AND rr.fecha BETWEEN ?2 AND ?3 "),
 	@NamedQuery(name="getHistorialPunto", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.fueRecolectado = TRUE AND rr.puntoRecoleccion = ?1"),
-	@NamedQuery(name="getAllRegistros", query="SELECT rr FROM ResiduoRegistro rr")
+	@NamedQuery(name="getAllRegistros", query="SELECT rr FROM ResiduoRegistro rr"),
+	@NamedQuery(name="removeAllRegistros", query="DELETE FROM ResiduoRegistro")
 })
 
 
@@ -20,6 +21,7 @@ public class ResiduoRegistro {
 	@Id
 	@GeneratedValue
 	private int id;
+
 	@ManyToOne
 	private Residuo residuo;
 	@Column
@@ -46,6 +48,11 @@ public class ResiduoRegistro {
 	}
 	
 	public ResiduoRegistro() {
+	}
+	
+	public void copy(ResiduoRegistro copiar) {
+		
+		this.fueRecolectado = copiar.isFueRecolectado();
 	}
 
 	public Residuo getResiduo() {
@@ -94,5 +101,21 @@ public class ResiduoRegistro {
 	
 	public double getVolumen() {
 		return this.volumenTotal;
+	}
+	public boolean isFueRecolectado() {
+		return fueRecolectado;
+	}
+	
+	
+	public void setFueRecolectado(boolean fueRecolectado) {
+		this.fueRecolectado = fueRecolectado;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

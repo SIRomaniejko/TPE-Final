@@ -32,7 +32,7 @@ public class Usuario extends Individuo{
 	private String apellido;
 	
 	public Usuario(String nombre, String apellido, int dni, double latitud, double longitud) {
-		super(((Integer)dni).toString(), nombre,latitud,longitud);
+		super(nombre,latitud,longitud);
 		this.apellido = apellido;
 		this.dni = dni;
 	}

@@ -10,15 +10,15 @@ import puntos.Ubicacion;
 @Table(name="table_individuo")
 public abstract class Individuo{
 	
+	@GeneratedValue
 	@Id
-	private String identificador;
+	private int id;
 	@Column
 	private String nombre;
 	@OneToOne(cascade=CascadeType.ALL)
 	private Ubicacion ubicacion;
 
-	public Individuo(String id, String nombre, double latitud, double longitud) {
-		this.identificador = id;
+	public Individuo(String nombre, double latitud, double longitud) {
 		this.nombre = nombre;
 		ubicacion = new Ubicacion(latitud,longitud);
 	}
@@ -42,11 +42,8 @@ public abstract class Individuo{
 	public Ubicacion getUbicacion(){
 		return this.ubicacion;
 	}
-	public String getId() {
-		return this.identificador;
-	}
-	public void setId(String identificador) {
-		this.identificador = identificador;
+	public int getId() {
+		return this.id;
 	}
 	public abstract List<Usuario> getUsuarios();
 	
