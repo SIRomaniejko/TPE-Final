@@ -11,7 +11,8 @@ import organizaciones.ONG;
 @NamedQueries({
 	@NamedQuery(name="getAllResiduos", query="SELECT r FROM Residuo r"),
 	@NamedQuery(name="getResiduo", query="SELECT r FROM Residuo r WHERE r.codigo = ?1"),
-	@NamedQuery(name="isRecyclable", query="SELECT r.esReciclable FROM Residuo r WHERE r.codigo = ?1 ")
+	@NamedQuery(name="isRecyclable", query="SELECT r.esReciclable FROM Residuo r WHERE r.codigo = ?1 "),
+	@NamedQuery(name="deleteAllResiduos", query="DELETE FROM Residuo")
 })
 @Path("/residuo")
 public class Residuo {
@@ -36,6 +37,13 @@ public class Residuo {
 
 	public void setOngPertenece(ONG ongPertenece) {
 		this.ongPertenece = ongPertenece;
+	}
+	
+	public void copy(Residuo copiar) {
+		this.nombre = copiar.getNombre();
+		this.volumen = copiar.getVolumen();
+		this.valor = copiar.getValor();
+		this.esReciclable = copiar.isEsReciclable();
 	}
 
 	public Residuo(String nombre, double volumen, double valor, boolean esReciclable) {

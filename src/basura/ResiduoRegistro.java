@@ -11,7 +11,8 @@ import javax.persistence.*;
 	@NamedQuery(name= "getBasuraUsuario", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.usuario = ?1"),
 	@NamedQuery(name="getRecicladosUsuario", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.usuario = ?1 AND rr.fecha BETWEEN ?2 AND ?3 "),
 	@NamedQuery(name="getRecicladoLugar", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.puntoRecoleccion = ?1 AND rr.fecha BETWEEN ?2 AND ?3 "),
-	@NamedQuery(name="getHistorialPunto", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.fueRecolectado = TRUE AND rr.puntoRecoleccion = ?1")
+	@NamedQuery(name="getHistorialPunto", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.fueRecolectado = TRUE AND rr.puntoRecoleccion = ?1"),
+	@NamedQuery(name="getAllRegistros", query="SELECT rr FROM ResiduoRegistro rr")
 })
 
 
@@ -34,8 +35,7 @@ public class ResiduoRegistro {
 	@Column 
 	private double volumenTotal;
 	
-	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario usuario, PuntoRecoleccion puntoRecoleccion,
-			Date fecha) {
+	public ResiduoRegistro(Residuo residuo, int cantidad, Usuario usuario, PuntoRecoleccion puntoRecoleccion,Date fecha) {
 		this.residuo = residuo;
 		this.cantidad = cantidad;
 		this.usuario = usuario;

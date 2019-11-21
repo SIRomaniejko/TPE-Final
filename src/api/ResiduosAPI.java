@@ -1,6 +1,7 @@
 package api;
 
 import basura.Residuo;
+import basura.ResiduoRegistro;
 import organizaciones.ONG;
 
 import javax.persistence.NoResultException;
@@ -10,25 +11,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/basura")
+@Path("/residuo")
 public class ResiduosAPI extends Api{
-	@Path("/residuo")
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Residuo> getAllResiduos(){
 		Query busqueda = this.em.createNamedQuery("getAllResiduos");
+		List<Residuo> resultado = null;
 		try {
-			List<Residuo> resultado = busqueda.getResultList();
-			this.em.close();
-			return resultado;
+			resultado = busqueda.getResultList();
 		}
 		catch(NoResultException exc) {
-			this.em.close();
-			return null;
 		}
-
+		this.em.close();
+		return resultado;
 	}
-	@Path("/residuo/{id}")
+	@Path("/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Residuo getResiduo(@PathParam("id") int id) {
@@ -39,23 +38,34 @@ public class ResiduosAPI extends Api{
 		return resultado;
 	}
 
-	@Path("/residuo")
+	
 	@PUT
 	public Response updateResiduos() {
 		this.em.close();
 		return Response.status(403).build();
 	}
 
-	@Path("/residuo/{id}")
+	@Path("/{id}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateResiduos(@PathParam("id") int id, Residuo residuoNuevo) {
+		Residuo residuoPersistido = em.find(Residuo.class, id);
+		ONG ongPersistida = em.find(ONG.class, residuoNuevo.getOngPertenece().getId());
+		if(residuoPersistido == null || ongPersistida == null) {
+			return Response.status(400).build();
+		}
+		residuoPersistido.copy(residuoNuevo);
+		ongPersistida.addResiduos(residuoPersistido);
+		this.em.getTransaction().begin();
+		em.merge(ongPersistida);
+		this.em.merge(residuoPersistido);
+		this.em.getTransaction().commit();
 		this.em.close();
-		return Response.status(403).build();
+		return Response.status(200).entity(residuoPersistido).build();
 	}
 
-	@Path("/residuo")
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -64,18 +74,14 @@ public class ResiduosAPI extends Api{
 		Residuo residuoPersistir = new Residuo(residuoNuevo.getNombre(), residuoNuevo.getVolumen(), residuoNuevo.getValor(), residuoNuevo.isEsReciclable());
 		ONG ongPersistir = em.find(ONG.class, residuoNuevo.getOngPertenece().getId());
 		if(ongPersistir == null) {
-			ongPersistir = new ONG(residuoNuevo.getOngPertenece().getNombre());
-			ongPersistir.addResiduos(residuoPersistir);
-			em.persist(ongPersistir);
+			return Response.status(400).build();
 		}
-		else {
-			ongPersistir.addResiduos(residuoPersistir);
-			em.merge(ongPersistir);
-		}
+		ongPersistir.addResiduos(residuoPersistir);
+		em.merge(ongPersistir);
 		this.em.persist(residuoPersistir);
 		this.em.getTransaction().commit();
 		this.em.close();
-		return Response.status(200).entity(residuoNuevo).build();
+		return Response.status(200).entity(residuoPersistir).build();
 	}
 //	Residuo residuoDefault2 = new Residuo("tapita", 0.1, 5, true);
 //	ONG ongdefault1 = em.find(ONG.class, 2);
@@ -83,15 +89,19 @@ public class ResiduosAPI extends Api{
 //	this.em.getTransaction().begin();
 //	this.em.persist(residuoDefault2);
 //	this.em.merge(ongdefault1);
-	@Path("/residuo")
+	
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteResiduos() {
+		this.em.getTransaction().begin();
+		Query remover = this.em.createNamedQuery("deleteAllResiduos");
+		remover.executeUpdate();
+		this.em.getTransaction().commit();
 		this.em.close();
-		return Response.status(403).build();
+		return Response.status(200).build();
 	}
 
-	@Path("/residuo/{id}")
+	@Path("/{id}")
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteResiduo(@PathParam("id") String id) {

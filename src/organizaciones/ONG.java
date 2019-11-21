@@ -20,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQueries({
-	
+	@NamedQuery(name="getAllONG", query="SELECT o FROM ONG o"),
+	@NamedQuery(name="deleteAllONG", query="DELETE FROM ONG")
 })
 public class ONG {
 	@Id
@@ -44,8 +45,10 @@ public class ONG {
 	}
 	
 	public void addResiduos(Residuo newResiduo) {
-		newResiduo.setOngPertenece(this);
-		this.residuosONG.add(newResiduo);
+		if(!this.residuosONG.contains(newResiduo)) {
+			newResiduo.setOngPertenece(this);
+			this.residuosONG.add(newResiduo);			
+		}
 	}
 	
 	public String getNombre(){
@@ -53,6 +56,10 @@ public class ONG {
 	}
 	public int getId() {
 		return this.id;
+	}
+	
+	public void copyONG(ONG ongCopiar) {
+		this.nombre = ongCopiar.getNombre();
 	}
 	
 	@JsonIgnore

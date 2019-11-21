@@ -57,11 +57,9 @@ public class Usuario extends Individuo{
 	}
 	
 	public void copyUser(Usuario userCopy) {
-		this.setDni(userCopy.getDni());
 		this.setApellido(userCopy.getApellido());
 		this.setNombre(userCopy.getNombre());
 		this.setUbicacion(userCopy.getUbicacion()); 
-		this.setId(userCopy.getId());
 	}
 	
 	@JsonIgnore
