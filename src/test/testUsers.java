@@ -39,7 +39,7 @@ public class testUsers {
 		try(BufferedReader br = new BufferedReader(new FileReader(csvFile))){
 			while((line = br.readLine()) != null) {
 				String[] items = line.split(csvSplitBy);
-				aux = new Usuario(items[0], items[1], Integer.parseInt(items[2]), items[3], Double.parseDouble(items[4]), Double.parseDouble(items[5]));
+				aux = new Usuario(items[0], items[1], Integer.parseInt(items[2]), Double.parseDouble(items[4]), Double.parseDouble(items[5]));
 				usuarios.add(aux);
 			}
 			System.out.println("Cargado Usuarios con exito");

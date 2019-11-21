@@ -29,9 +29,9 @@ import users.Usuario;
 public class testResiduosGanancias {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	static Usuario user1 = new Usuario("jose", "pedro", 2, "casa", 1, 1);
-	static Usuario user2 = new Usuario("pablo", "pedro", 3, "casa", 1, 1);
-	static Usuario user3 = new Usuario("pedro", "pedro", 4, "casa", 1, 1);
+	static Usuario user1 = new Usuario("jose", "pedro", 2, 1, 1);
+	static Usuario user2 = new Usuario("pablo", "pedro", 3, 1, 1);
+	static Usuario user3 = new Usuario("pedro", "pedro", 4, 1, 1);
 	static Residuo residuoa = new Residuo("botella", 10, 100, true);
 	static Residuo residuob = new Residuo("tapita", 1, 1000, true);
 	static ResiduoRegistro residuoRegistro = new ResiduoRegistro(residuoa, 1, user1, null, new Date(2000, 1, 3));
