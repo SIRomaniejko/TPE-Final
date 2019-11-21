@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -92,10 +94,16 @@ public class RegistroAPI extends Api{
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removeRegistros() {
-		this.em.getTransaction().begin();
-		this.em.createNamedQuery("removeAllRegistros").executeUpdate();
-		this.em.getTransaction().commit();
-		this.em.close();
+		try {
+			this.em.getTransaction().begin();
+			this.em.createNamedQuery("removeAllRegistros").executeUpdate();
+			this.em.getTransaction().commit();
+			this.em.close();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		return Response.status(200).build();
 	}
 	
@@ -107,9 +115,15 @@ public class RegistroAPI extends Api{
 		if(borrar == null) {
 			return Response.status(404).build();
 		}
-		this.em.getTransaction().begin();
-		this.em.remove(borrar);
-		this.em.getTransaction().commit();
+		try {
+			this.em.getTransaction().begin();
+			this.em.remove(borrar);
+			this.em.getTransaction().commit();;			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		this.em.close();
 		return Response.status(200).entity(borrar).build();
 	}

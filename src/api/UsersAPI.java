@@ -3,7 +3,9 @@ package api;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -88,8 +90,17 @@ public class UsersAPI extends Api{
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteUsuarios() {
-		this.em.close();
-		return Response.status(403).build();
+		try {
+			this.em.getTransaction().begin();
+			this.em.createNamedQuery("deleteAllUsers").executeUpdate();
+			this.em.getTransaction().commit();
+			this.em.close();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
+		return Response.status(200).build();
 	}
 	
 	@Path("/{id}")
@@ -98,9 +109,18 @@ public class UsersAPI extends Api{
 	public Response deleteUsuario(@PathParam("id") String id) {
 		
 		Usuario a = this.em.find(Usuario.class, id);
-		this.em.getTransaction().begin();
-		this.em.remove(a);
-		this.em.getTransaction().commit();
+		if(a == null) {
+			return Response.status(404).build();
+		}
+		try {
+			this.em.getTransaction().begin();
+			this.em.remove(a);
+			this.em.getTransaction().commit();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		this.em.close();
 		return Response.status(200).entity(a).build();
 	}

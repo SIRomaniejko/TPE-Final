@@ -5,6 +5,7 @@ import basura.ResiduoRegistro;
 import organizaciones.ONG;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -87,10 +88,16 @@ public class ResiduosAPI extends Api{
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteResiduos() {
-		this.em.getTransaction().begin();
-		Query remover = this.em.createNamedQuery("deleteAllResiduos");
-		remover.executeUpdate();
-		this.em.getTransaction().commit();
+		try {
+			this.em.getTransaction().begin();
+			Query remover = this.em.createNamedQuery("deleteAllResiduos");
+			remover.executeUpdate();
+			this.em.getTransaction().commit();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		this.em.close();
 		return Response.status(200).build();
 	}
@@ -101,9 +108,18 @@ public class ResiduosAPI extends Api{
 	public Response deleteResiduo(@PathParam("id") String id) {
 		
 		Residuo a = this.em.find(Residuo.class, id);
-		this.em.getTransaction().begin();
-		this.em.remove(a);
-		this.em.getTransaction().commit();
+		if(a == null) {
+			return Response.status(404).build();
+		}
+		try {
+			this.em.getTransaction().begin();
+			this.em.remove(a);
+			this.em.getTransaction().commit();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		this.em.close();
 		return Response.status(200).entity(a).build();
 	}

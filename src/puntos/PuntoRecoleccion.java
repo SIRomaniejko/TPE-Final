@@ -12,7 +12,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQueries({
 		@NamedQuery(name="isFull", query="SELECT 1 FROM PuntoRecoleccion p WHERE p.volumenParaRecolectar <= (SELECT SUM(rr.volumenTotal) FROM ResiduoRegistro rr WHERE  p = rr.puntoRecoleccion )AND p.id = ?1"),
-		@NamedQuery(name="getAllPuntos", query="SELECT c FROM PuntoRecoleccion c")
+		@NamedQuery(name="getAllPuntos", query="SELECT c FROM PuntoRecoleccion c"),
+		@NamedQuery(name="deleteAllPuntosRecoleccion", query="DELETE FROM PuntoRecoleccion")
 })
 public class PuntoRecoleccion {
 	@Id

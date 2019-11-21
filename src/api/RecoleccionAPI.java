@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import basura.Residuo;
 import basura.ResiduoRegistro;
 import puntos.PuntoRecoleccion;
 import users.Usuario;
@@ -74,6 +76,46 @@ public class RecoleccionAPI extends Api{
 		this.em.getTransaction().commit();
 		this.em.close();
 		return Response.status(200).entity(puntoPersistido).build();
+	}
+	
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removePuntos() {
+		try {
+			this.em.getTransaction().begin();
+			Query remover = this.em.createNamedQuery("deleteAllPuntosRecoleccion");
+			remover.executeUpdate();
+			this.em.getTransaction().commit();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
+		this.em.close();
+		return Response.status(200).build();
+		
+	}
+	
+	@Path("/{id}")
+	@DELETE
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteResiduo(@PathParam("id") String id) {
+		
+		PuntoRecoleccion a = this.em.find(PuntoRecoleccion.class, id);
+		if(a == null) {
+			return Response.status(404).build();
+		}
+		try {
+			this.em.getTransaction().begin();
+			this.em.remove(a);
+			this.em.getTransaction().commit();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
+		this.em.close();
+		return Response.status(200).entity(a).build();
 	}
 }
 

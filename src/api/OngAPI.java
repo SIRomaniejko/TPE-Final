@@ -3,7 +3,9 @@ package api;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -78,10 +80,16 @@ public class OngAPI extends Api{
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteONGs() {
-		this.em.getTransaction().begin();
-		Query remover = this.em.createNamedQuery("deleteAllONG");
-		remover.executeUpdate();
-		this.em.getTransaction().commit();
+		try {
+			this.em.getTransaction().begin();
+			Query remover = this.em.createNamedQuery("deleteAllONG");
+			remover.executeUpdate();			
+			this.em.getTransaction().commit();
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		this.em.close();
 		return Response.status(200).build();
 	}
@@ -91,9 +99,18 @@ public class OngAPI extends Api{
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteONG(@PathParam("id") String id) {
 		ONG a = this.em.find(ONG.class, id);
-		this.em.getTransaction().begin();
-		this.em.remove(a);
-		this.em.getTransaction().commit();
+		if(a == null) {
+			return Response.status(404).build();
+		}
+		try {
+			this.em.getTransaction().begin();
+			this.em.remove(a);
+			this.em.getTransaction().commit();			
+		}
+		catch (PersistenceException e) {
+			this.em.close();
+			return Response.status(409).build();
+		}
 		this.em.close();
 		return Response.status(200).entity(a).build();
 	}

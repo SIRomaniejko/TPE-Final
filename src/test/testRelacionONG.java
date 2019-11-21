@@ -73,15 +73,4 @@ public class testRelacionONG {
 		System.out.println(((ONG) em.createQuery("SELECT a FROM ONG a").getResultList().get(0)).noEsVacio());
 		System.out.println(((ONG) em.createQuery("SELECT c FROM ONG c").getResultList().get(0)).getResiduos().size());
 	}
-	
-	@Test
-	public void conchaDeLaLora() {
-		Residuo residuoDefault2 = new Residuo("tapita", 0.1, 5, true);
-		ONG ongdefault1 = new ONG("garrahan");
-		ongdefault1.addResiduos(residuoDefault2);
-		em.getTransaction().begin();
-		em.persist(residuoDefault2);
-		em.persist(ongdefault1);
-		em.getTransaction().commit();
-	}
 }
