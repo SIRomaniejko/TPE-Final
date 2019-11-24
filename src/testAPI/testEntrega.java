@@ -108,6 +108,7 @@ public class testEntrega {
 		ResiduoRegistro rr = new ResiduoRegistro(residuoDef1, 1, userDef1, puntoDef1, new Date(120, 0, 2));
 		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
 		System.out.println("acaso funciona?" + response.getStatus());
+		System.out.println("encontro el punto? " + response.readEntity(String.class));
 	}
 	
 	

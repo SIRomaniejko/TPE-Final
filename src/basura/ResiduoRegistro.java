@@ -6,6 +6,8 @@ import users.Usuario;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name= "getBasuraUsuario", query="SELECT rr FROM ResiduoRegistro rr WHERE rr.usuario = ?1"),
@@ -99,6 +101,7 @@ public class ResiduoRegistro {
 		this.volumenTotal = this.cantidad*this.residuo.getVolumen();
 	}
 	
+	@JsonIgnore
 	public double getVolumen() {
 		return this.volumenTotal;
 	}
