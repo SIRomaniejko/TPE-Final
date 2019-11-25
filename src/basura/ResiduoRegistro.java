@@ -23,7 +23,6 @@ public class ResiduoRegistro {
 	@Id
 	@GeneratedValue
 	private int id;
-
 	@ManyToOne
 	private Residuo residuo;
 	@Column

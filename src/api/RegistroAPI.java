@@ -50,11 +50,8 @@ public class RegistroAPI extends Api{
 		Residuo residuoPersistido = this.em.find(Residuo.class, registroNuevo.getResiduo().getCodigo());
 		Usuario userPersistido = this.em.find(Usuario.class, registroNuevo.getPersona().getId());
 		PuntoRecoleccion puntoPersistido = this.em.find(PuntoRecoleccion.class, registroNuevo.getPuntorecoleccion().getId());
-		System.out.println(residuoPersistido != null);
-		System.out.println(userPersistido != null);
-		System.out.println(puntoPersistido != null);
 		if(residuoPersistido == null || userPersistido == null || puntoPersistido == null) {
-			return Response.status(400).entity(registroNuevo.getResiduo().getCodigo()).build();
+			return Response.status(400).build();
 		}
 		registroNuevo.setPersona(userPersistido);
 		registroNuevo.setPuntorecoleccion(puntoPersistido);

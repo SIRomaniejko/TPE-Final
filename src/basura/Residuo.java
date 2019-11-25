@@ -14,7 +14,6 @@ import organizaciones.ONG;
 	@NamedQuery(name="isRecyclable", query="SELECT r.esReciclable FROM Residuo r WHERE r.codigo = ?1 "),
 	@NamedQuery(name="deleteAllResiduos", query="DELETE FROM Residuo")
 })
-@Path("/residuo")
 public class Residuo {
 	@Id
 	@GeneratedValue
@@ -54,10 +53,6 @@ public class Residuo {
 	}
 
 	public Residuo() {}
-
-	@Path("/nombre")
-	@GET
-	@Produces("application/json")
 	public String getNombre() {
 		return nombre;
 	}

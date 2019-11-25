@@ -2,14 +2,26 @@ package api;
 
 import basura.Residuo;
 import basura.ResiduoRegistro;
+import contenedorRespuestas.Fechas;
+import contenedorRespuestas.Residuos;
 import organizaciones.ONG;
 
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Path("/residuo")
@@ -122,5 +134,31 @@ public class ResiduosAPI extends Api{
 		}
 		this.em.close();
 		return Response.status(200).entity(a).build();
+	}
+	
+	@Path("/getByUser/{id}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getResiduosUser(@PathParam("id") int id, @HeaderParam("minimo")Date minimo, @HeaderParam("maximo") Date maximo) {
+		System.out.println(minimo != null);
+		System.out.println(maximo != null);
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://localhost:8081");
+		WebTarget tarjetLocal = target.path("residuo/" + id);
+		Response respuesta;
+		try {
+			Invocation.Builder invocationBuilder = tarjetLocal.request(MediaType.APPLICATION_JSON);
+			if(minimo != null && maximo != null) {
+				invocationBuilder.header("minimo", minimo.getTime());
+				invocationBuilder.header("maximo", maximo.getTime());				
+			}
+			respuesta = invocationBuilder.get();
+			System.out.println(respuesta.getStatus());
+		}
+		catch(ProcessingException exc) {
+			return Response.status(504).build();
+		}
+		return Response.status(200).entity(respuesta.readEntity(String.class)).build();
 	}
 }

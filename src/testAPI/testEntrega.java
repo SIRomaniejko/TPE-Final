@@ -2,6 +2,7 @@ package testAPI;
 
 import static org.junit.Assert.*;
 
+import java.net.ConnectException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.jws.WebResult;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -31,6 +33,7 @@ import basura.Residuo;
 import basura.ResiduoRegistro;
 import contenedorRespuestas.ONGs;
 import contenedorRespuestas.PuntosRecoleccion;
+import contenedorRespuestas.Registros;
 import contenedorRespuestas.Residuos;
 import contenedorRespuestas.Usuarios;
 import organizaciones.ONG;
@@ -45,6 +48,7 @@ public class testEntrega {
 	private static Response responseUsuarioDef1;
 	private static Response responseUsuarioDef2;
 	private static Response responsePuntoDef;
+	private static int idUser;
 	private static Response responseResiduoDef1;
 	private static Response responseResiduoDef2;
 	private static Response responseResiduoDef3;
@@ -58,7 +62,6 @@ public class testEntrega {
 		WebTarget tarjetLocal = target.path("ONG");
 		Invocation.Builder invocationBuilder =  tarjetLocal.request(MediaType.APPLICATION_JSON);
 		responseONGdef = invocationBuilder.post(Entity.entity(new ONG("caritas"), MediaType.APPLICATION_JSON));
-		
 		//creamos Usuarios
 		tarjetLocal = target.path("users");
 		invocationBuilder =  tarjetLocal.request(MediaType.APPLICATION_JSON);
@@ -102,13 +105,24 @@ public class testEntrega {
 		Residuo residuoDef2 = responseResiduoDef2.readEntity(Residuo.class);
 		Residuo residuoDef3 = responseResiduoDef3.readEntity(Residuo.class);
 		Usuario userDef1 = responseUsuarioDef1.readEntity(Usuario.class);
+		idUser = userDef1.getId();
 		Usuario userDef2 = responseUsuarioDef2.readEntity(Usuario.class);
 		PuntoRecoleccion puntoDef1 = responsePuntoDef.readEntity(PuntoRecoleccion.class);
-		System.out.println(residuoDef1 != null && userDef1 != null && puntoDef1 != null);
 		ResiduoRegistro rr = new ResiduoRegistro(residuoDef1, 1, userDef1, puntoDef1, new Date(120, 0, 2));
 		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
-		System.out.println("acaso funciona?" + response.getStatus());
-		System.out.println("encontro el punto? " + response.readEntity(String.class));
+		rr = new ResiduoRegistro(residuoDef1, 3, userDef1, puntoDef1, new Date(120, 0, 2));
+		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
+		rr = new ResiduoRegistro(residuoDef2, 2, userDef2, puntoDef1, new Date(120, 0, 2));
+		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
+		rr = new ResiduoRegistro(residuoDef3, 4, userDef1, puntoDef1, new Date(118, 0, 2));
+		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
+		rr = new ResiduoRegistro(residuoDef2, 7, userDef2, puntoDef1, new Date(120, 0, 2));
+		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
+		rr = new ResiduoRegistro(residuoDef3, 2, userDef1, puntoDef1, new Date(118, 0, 2));
+		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
+		rr = new ResiduoRegistro(residuoDef2, 1, userDef2, puntoDef1, new Date(120, 0, 2));
+		response = invocationBuilder.post(Entity.entity(rr, MediaType.APPLICATION_JSON));
+
 	}
 	
 	
@@ -151,14 +165,43 @@ public class testEntrega {
 		response = invocationBuilder.get();
 		Residuos resultadoResiduo = response.readEntity(Residuos.class);
 		assertEquals(5, resultadoResiduo.size());
+		
+		//check cantidad registros
+		tarjetLocal = target.path("registro");
+		invocationBuilder = tarjetLocal.request(MediaType.APPLICATION_JSON);
+		response = invocationBuilder.get();
+		Registros resultadoRegistro = response.readEntity(Registros.class);
+		assertEquals(7, resultadoRegistro.size());
+		
+	}
+	
+	@Test
+	public void testMicroservicio() {
+		WebTarget tarjetLocal = target.path("metodosAdmin/refreshMicro");
+		Invocation.Builder invocationBuilder =  tarjetLocal.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(null);
+		assertEquals(200, response.getStatus());
+		tarjetLocal = target.path("residuo/getByUser/" + idUser);
+		invocationBuilder =  tarjetLocal.request(MediaType.APPLICATION_JSON);
+		response = invocationBuilder.get();
+		assertEquals(2, response.readEntity(Residuos.class).size());
+		invocationBuilder.header("minimo", "2019-01-01");
+		invocationBuilder.header("maximo", "2030-01-01");
+		response = invocationBuilder.get();
+		assertEquals(1, response.readEntity(Residuos.class).size());
 	}
 	
 	@AfterClass
 	public static void RemoveAll() {
-		//remove Residuo
-		WebTarget tarjetLocal = target.path("residuo");
+		//remove registros
+		WebTarget tarjetLocal = target.path("registro");
 		Invocation.Builder invocationBuilder =  tarjetLocal.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.delete();
+		
+		//remove Residuo
+		tarjetLocal = target.path("residuo");
+		invocationBuilder =  tarjetLocal.request(MediaType.APPLICATION_JSON);
+		response = invocationBuilder.delete();
 		
 		//remove ONG
 		tarjetLocal = target.path("ONG");
